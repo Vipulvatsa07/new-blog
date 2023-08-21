@@ -19,24 +19,43 @@ blogRouter.post("/add",async(req,res)=>{
 res.send({"msg":"not able to create post"})
     }
 })
-blogRouter.get("/",async(req,res)=>{
+// blogRouter.get("/get",async(req,res)=>{
     
   
-    try
-    {
-        const products=await BlogModel.find()
-        res.send(products)
+//     try
+//     {
+//         const products=await BlogModel.find()
+//         res.send(products)
 
+//     }
+//     catch(err)
+//     {
+//         res.send({"msg":"data not found"})
+//     }
+// }
+
+
+
+// )
+
+blogRouter.get("/", async (req, res) => {
+    try {
+      const data = await  BlogModel.find();
+  
+      res.send({
+        message: "All blog data",
+        status: 1,
+        data: data,
+        error: false,
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "Something went wrong: " + error.message,
+        status: 0,
+        error: true,
+      });
     }
-    catch(err)
-    {
-        res.send({"msg":"data not found"})
-    }
-}
-
-
-
-)
+  });
 
 blogRouter.get("/:id",async(req,res)=>{
     let id=req.params.id;
